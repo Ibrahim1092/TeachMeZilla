@@ -44,7 +44,7 @@ class StageController extends Controller
             $stage->Name = ['en' => $request->eName , 'ar' => $request->aName];
             $stage->Note = ['en' => $request->eNote , 'ar' => $request->aNote];
             $stage->Save();
-            return redirect()->back()->with('message' , trans('messages.Success'));;
+            return redirect()->back()->with('message' , trans('messages.Success'));
         }
         catch(\Exception $e)    
         {

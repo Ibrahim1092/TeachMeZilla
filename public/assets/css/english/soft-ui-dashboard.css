@@ -9095,7 +9095,7 @@ fieldset:disabled .btn {
 }
 
 .justify-content-center {
-  justify-content: center !important;
+  justify-content:center !important;
 }
 
 .justify-content-between {
@@ -20439,7 +20439,7 @@ fieldset:disabled .btn {
 .btn-primary:hover,
 .btn.bg-gradient-primary:hover {
   background-color: #cb0c9f;
-  border-color: #cb0c9f;
+  background-color: #cb0c9f; 
 }
 
 .btn-primary .btn.bg-outline-primary,
@@ -20532,7 +20532,7 @@ fieldset:disabled .btn {
 .btn.bg-gradient-success:not(:disabled):not(.disabled):active,
 .show>.btn.bg-gradient-success.dropdown-toggle {
   color: color-yiq(#82d616);
-  background-color: #82d616;
+  background-color: black;
 }
 
 .btn-success.focus,

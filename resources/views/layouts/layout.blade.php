@@ -50,8 +50,7 @@
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
                 aria-hidden="true" id="iconSidenav"></i>
-            <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/soft-ui-dashboard/pages/dashboard.html "
-                target="_blank">
+            <a class="navbar-brand m-0" href="#" >
                 <img src="{{ URL::asset('assets/img/LogoMe2.png') }}" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold">TeachMe-Zilla</span>
             </a>
@@ -114,8 +113,8 @@
                     </a>
                 </li>
                 
-                {{-- <li class="nav-item">
-                    <a class="nav-link  " href="../pages/billing.html">
+                 <li class="nav-item">
+                    <a class="nav-link  " href="{{route('classroom.index')}}">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                             <svg width="12px" height="12px" viewBox="0 0 43 36" version="1.1"
@@ -138,10 +137,10 @@
                                 </g>
                             </svg>
                         </div>
-                        <span class="nav-link-text ms-1">Billing</span>
+                        <span class="nav-link-text ms-1">{{ trans('classroom.Class_rooms') }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
+               {{-- <li class="nav-item">
                     <a class="nav-link  " href="../pages/virtual-reality.html">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -171,7 +170,7 @@
                         <span class="nav-link-text ms-1">Virtual Reality</span>
                     </a>
                 </li>
-                <li class="nav-item">
+               {{-- <li class="nav-item">
                     <a class="nav-link  " href="../pages/rtl.html">
                         <div
                             class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
@@ -333,8 +332,9 @@
                     @endforeach
                 @endif
                 @if (Session::has('message'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong> )!</strong> {{ Session::get('message') }}
+                    <div class="alert alert-light alert-dismissible fade show" role="alert" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">
+                       
+                         {{ Session::get('message') }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><i
                                 class="fa fa-times" aria-hidden="true"></i></button>
                     </div>

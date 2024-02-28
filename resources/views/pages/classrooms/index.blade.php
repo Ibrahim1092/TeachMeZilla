@@ -8,7 +8,7 @@
                         {{-- <a class="btn btn-success" href="{{ route('stage.add') }}">Add Stage</a> --}}
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            {{ trans('stages.Add-Stage') }}
+                            {{ trans('classroom.Add-Class') }}
                         </button>
 
                         <!-- Modal -->
@@ -18,35 +18,27 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ trans('stages.Add-Stage') }}
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ trans('classroom.Add-Class') }}
                                         </h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="card-body">
-                                            <form role="form" action="{{ route('stage.store') }}" method="POST">
+                                            <form role="form" action="{{ route('classroom.store') }}" method="POST">
                                                 @csrf
-                                                <label>{{ trans('stages.E-Name') }}</label>
+                                                <label>{{ trans('classroom.Name') }}</label>
                                                 <div class="mb-3">
                                                     <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="email-addon" name="eName">
+                                                        aria-label="text" aria-describedby="email-addon" name="name">
                                                 </div>
-                                                <label>{{ trans('stages.A-Name') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="aName">
-                                                </div>
-                                                <label>{{ trans('stages.E-Note') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="eNote">
-                                                </div>
-                                                <label>{{ trans('stages.A-Note') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="aNote">
-                                                </div>
+                                                <label>{{ trans('classroom.stage_name') }}</label>
+                                                <select class="form-select" aria-label="Default select example" name="stage">
+                                                    @foreach ($stages as $stage)
+                                                    <option >{{$stage->Name}}</option>
+                                                    @endforeach
+                                                </select>
+
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -62,17 +54,17 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table class="table align-items-center mb-0" style="border-block-color: black;border:1cm">
                                 <thead>
                                     <tr>
                                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             {{ trans('Stages.Stage-ID') }}</th>
                                         <th
                                             class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            {{ trans('Stages.Stage-Name') }}</th>
+                                            {{ trans('classroom.Name') }}</th>
                                         <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                            {{ trans('Stages.Stage-Note') }}</th>
+                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                            {{ trans('classroom.stage_name') }}</th>
                                         <th
                                             class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
                                             {{ trans('Stages.Stage-Process') }}</th>
@@ -83,24 +75,28 @@
                                     @php
                                         $i=0;
                                     @endphp
-                                    @foreach ($stage as $item)
+                                    @foreach ($classrooms as $item)
                                     @php
                                         $i++;
                                     @endphp
                                         <tr>
                                             <td>
                                                 <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-xs text-secondary mb-0">{{ $i}}</p>
+                                                    <div class="d-flex flex-column justify-content-center" >
+                                                        <p class="text-center  text-xs text-secondary mb-0" style="text-align: center">{{ $i}}</p>
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 {{-- <p class="text-xs font-weight-bold mb-0">Manager</p> --}}
-                                                <p class="text-xs text-secondary mb-0">{{ $item->Name }}</p>
+                                                <p class="text-xs text-secondary mb-0">{{ $item->name }}</p>
                                             </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-xs text-secondary mb-0" style="border: 3cm">{{ $item->Note }}</span>
+                                            <td>
+                                                <div class="d-flex flex-column justify-content-center" style="text-overflow: ellipsis">
+                                                {{-- <p class="text-xs font-weight-bold mb-0">Manager</p> --}}
+                                                <p class="text-xs font-weight-bold mb-0" style="text-align: center">{{ $item->stage->Name }}</p>
+                                                </div>
+                                                {{-- <p class="text-xs text-secondary mb-0" style="text-align: center">{{ $item->stage->Name }}</p> --}}
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="container text-center">
@@ -108,12 +104,12 @@
                                                         <div class="col">
                                                             <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-success"
-                                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$item->ID}}">
+                                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$item->id}}">
                                                                 {{ trans('stages.Edit') }}
                                                             </button>
 
                                                             <!-- Modal -->
-                                                            <div class="modal fade" id="staticBackdrop{{$item->ID}}"
+                                                            <div class="modal fade" id="staticBackdrop{{$item->id}}"
                                                                 data-bs-backdrop="static" data-bs-keyboard="false"
                                                                 tabindex="-1" aria-labelledby="staticBackdropLabel"
                                                                 aria-hidden="true">
@@ -128,32 +124,26 @@
                                                                                 aria-label="Close"></button>
                                                                         </div>
                                                                         <div class="modal-body">
-                                                                            <form role="form" action="{{ route('stage.update') }}" method="POST">
+                                                                           
+                                                                            <form role="form" action="{{ route('classroom.update') }}" method="POST">
                                                                                 @csrf
-                                                                                <label>{{ trans('stages.E-Name') }}</label>
+                                                                                <label>{{ trans('classroom.Name') }}</label>
                                                                                 <div class="mb-3">
-                                                                                    <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="email-addon" name="eName" value="{{$item->getTranslation('Name','en')}}">
+                                                                                    <input type="text" class="form-control" value="{{$item->name}}"
+                                                                                         name="name">
                                                                                 </div>
-                                                                                <label>{{ trans('stages.A-Name') }}</label>
+                                                                                <label>{{ trans('classroom.stage_name') }}</label>
+                                                                                <select class="form-select" aria-label="Default select example" name="stage">
+                                                                                    <option value="{{$item->stage->Name}}">{{$item->stage->Name}}</option>
+                                                                                    @foreach ($stages as $stage)
+                                                                                    @if ($stage->Name != $item->stage->Name)
+                                                                                    <option value="{{$stage->Name}}">{{$stage->Name}}</option>
+                                                                                    @endif
+    
+                                                                                    @endforeach
+                                                                                </select>
                                                                                 <div class="mb-3">
-                                                                                    <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="aName" value="{{$item->getTranslation('Name','ar')}}">
-                                                                                </div>
-                                                                                <label>{{ trans('stages.E-Note') }}</label>
-                                                                                <div class="mb-3">
-                                                                                    <textarea name="eNote" class="form-control" cols="5" rows="5">{{$item->getTranslation('Note','en')}}</textarea>
-                                                                                    {{-- <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="eNote" value="{{$item->getTranslation('Note','en')}}"> --}}
-                                                                                </div>
-                                                                                <label>{{ trans('stages.A-Note') }}</label>
-                                                                                <div class="mb-3">
-                                                                                    <textarea name="aNote" class="form-control" cols="5" rows="5">{{$item->getTranslation('Note','ar')}}</textarea>
-                                                                                    {{-- <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="aNote" value="{{$item->getTranslation('Note','ar')}}"> --}}
-                                                                                </div>
-                                                                                <div class="mb-3">
-                                                                                    <input type="hidden" class="form-control" name="id" value="{{$item->ID}}">
+                                                                                    <input type="hidden" class="form-control" name="id" value="{{$item->id}}">
                                                                                 </div> 
                                                                         </div>
                                                                         <div class="modal-footer">
@@ -171,9 +161,9 @@
                                                         <div class="col">
                                                         </div>
                                                         <div class="col">
-                                                            <form action="{{route('stage.delete')}}" method="DELETE">
+                                                            <form action="{{route('classroom.delete')}}" method="DELETE">
                                                                 @csrf
-                                                                <input type="hidden" name = "id" value="{{$item->ID}}">
+                                                                <input type="hidden" name = "id" value="{{$item->id}}">
                                                                 <button type="submit" class ="btn btn-danger">{{ trans('stages.Delete') }}</button> 
                                                             </form>
                                                         </div>
@@ -190,7 +180,7 @@
                 </div>
             </div>
             <div>
-                {{ $stage->onEachSide(1)->links() }}
+                {{ $classrooms->onEachSide(1)->links() }}
             </div>
 
 
@@ -454,3 +444,5 @@
             </div>
         </div> --}}
     @endsection
+
+

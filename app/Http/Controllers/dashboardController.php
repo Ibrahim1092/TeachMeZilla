@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Log;
 class dashboardController extends Controller
 {
     /**
@@ -13,13 +14,9 @@ class dashboardController extends Controller
     {
         return view('pages.dashboard.dashboard');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+       //
     }
 
     /**

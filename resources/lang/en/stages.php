@@ -1,6 +1,6 @@
 <?php 
 return [
-    'Grade-Stages' => 'Grade Stages',
+    'Grade-Stages' => 'Educational Stages',
     'Stage-ID' => 'ID',
     'Stage-Name' => 'Name',
     'Stage-Note' => 'Note',
