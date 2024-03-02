@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stage;
+use App\Models\ClassRoom;
 use Illuminate\Http\Request;
 
 class StageController extends Controller
@@ -83,7 +84,7 @@ class StageController extends Controller
                 'eNote'=> 'required|string',
                 'aNote'=> 'required|string',
             ]);
-            $stage = Stage::where('id' , $request->id)->update(
+            $stage = Stage::where('ID' , $request->id)->update(
                 [
                     'Name' => ['en' => $request->eName , 'ar' => $request->aName ],
                     'Note' => ['en' => $request->eNote , 'ar' => $request->aNote]
@@ -105,12 +106,35 @@ class StageController extends Controller
     public function destroy(Request $request)
     {
         try{
-            $stage = Stage::where('id' , $request->id)->delete();
-            return redirect()->back()->with('message' , trans('messages.Success'));;
+            $class_id = ClassRoom::where('stage_id' , $request->id)->pluck('stage_id');
+            if ($class_id->count() == 0)
+            {
+                $stage = Stage::where('ID' , $request->id)->delete();
+                return redirect()->back()->with('message' , trans('messages.Success'));
+            }
+            else
+            {
+                return redirect()->back()->with('message' , trans('messages.S_Failed'));
+            }
+           
         }
         catch(\Exception $e)    
         {
             return redirect()->back()->withErrors(['errors' => $e->getMessage()]);
         }
     }
+    public function deleteAll(Request $request)
+    {
+        try 
+            {
+                $list = explode(',' , $request->id);
+                $deleteselected = Stage::whereIn('ID' , $list)->delete();
+                return redirect()->back()->with('message' , trans('messages.Success')); 
+            }
+            catch (\Exception $e)   
+            {
+                return redirect()->back()->withErrors(['errors'=> $e->getMessage()]);   
+            }
+    }
+   
 }

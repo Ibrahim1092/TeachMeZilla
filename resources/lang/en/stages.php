@@ -4,7 +4,7 @@ return [
     'Stage-ID' => 'ID',
     'Stage-Name' => 'Name',
     'Stage-Note' => 'Note',
-    'Stage-Process' => 'Process',
+    'Stage-Process' => 'Operations',
     'Edit' => 'Edit',
     'Delete' => 'Delete',
     'Add-Stage' => 'Add Stage',

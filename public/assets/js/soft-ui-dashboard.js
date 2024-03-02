@@ -445,3 +445,23 @@ function sidenavTypeOnResize() {
     });
   }
 }
+function checkAll(className , elem)
+{
+  var elements = document.getElementsByClassName(className);
+  var l = elements.length;
+  if (elem.checked)
+  {
+    for(let i = 0 ; i< l ; i++)
+    {
+      elements[i].checked = true;
+    }
+  }
+  else
+  {
+    for(let i = 0 ; i< l ; i++)
+    {
+      elements[i].checked = false;
+    }
+  }
+
+}

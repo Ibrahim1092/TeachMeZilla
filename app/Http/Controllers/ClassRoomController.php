@@ -17,7 +17,7 @@ class ClassRoomController extends Controller
     {
         try {
             $classrooms = ClassRoom::paginate(3);
-            $stages = Stage::select('Name')->get();
+            $stages = Stage::select('ID','Name')->get();
             return view('pages.classrooms.index', compact('classrooms'))->with('stages', $stages);
         } catch (\Exception $e) {
             return redirect()->back()->withErrors(['errors' => $e->getMessage()]);
@@ -100,5 +100,34 @@ class ClassRoomController extends Controller
             return redirect()->back()->withErrors(['errors'=> $e->getMessage()]);   
         }
         
+        
     }
+    public function deleteAll(Request $request)
+        {
+            try 
+            {
+                $list = explode(',' , $request->id);
+                $deleteselected = ClassRoom::whereIn('id' , $list)->delete();
+                return redirect()->back()->with('message' , trans('messages.Success')); 
+            }
+            catch (\Exception $e)   
+            {
+                return redirect()->back()->withErrors(['errors'=> $e->getMessage()]);   
+            }
+        }
+        public function specificSearch($id)
+        {
+            try 
+                {
+                    $specific = ClassRoom::where('stage_id',$id)->paginate(4);
+                    $stages = Stage::all();
+                    // return $specific;
+                    return view('pages.classrooms.index')->with('stages',$stages)->withDetails($specific);
+                    
+                }
+                catch (\Exception $e)   
+                {
+                    return redirect()->back()->withErrors(['errors'=> $e->getMessage()]);   
+                }
+        }
 }

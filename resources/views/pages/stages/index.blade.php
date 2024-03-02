@@ -5,177 +5,281 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        {{-- <a class="btn btn-success" href="{{ route('stage.add') }}">Add Stage</a> --}}
-                        <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             {{ trans('stages.Add-Stage') }}
                         </button>
-
-                        <!-- Modal -->
-                        
-                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ trans('stages.Add-Stage') }}
-                                        </h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="card-body">
-                                            <form role="form" action="{{ route('stage.store') }}" method="POST">
-                                                @csrf
-                                                <label>{{ trans('stages.E-Name') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="email-addon" name="eName">
-                                                </div>
-                                                <label>{{ trans('stages.A-Name') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="aName">
-                                                </div>
-                                                <label>{{ trans('stages.E-Note') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="eNote">
-                                                </div>
-                                                <label>{{ trans('stages.A-Note') }}</label>
-                                                <div class="mb-3">
-                                                    <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="password-addon" name="aNote">
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
-                                        <button type="submit"
-                                            class="btn btn-primary">{{ trans('stages.Confirm') }}</button>
-                                    </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <button type="button" class="btn btn-success" id="deleteAll" onclick="broo()">
+                            {{ trans('classroom.Delete_All') }}
+                        </button>
+                        {{-- <div class="dropdown" > --}}
+                          
+                        {{-- </div> --}}
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
-                            <table class="table align-items-center mb-0">
+                            <table id="datatable" class="table align-items-center mb-0" style="border-color: black">
                                 <thead>
                                     <tr>
-                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                            style="text-align: center">
+                                            <input type="checkbox" name="delete_all" id="delete_all"
+                                                onclick="checkAll('box',this)" />
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                            style="text-align: center">
                                             {{ trans('Stages.Stage-ID') }}</th>
-                                        <th
-                                            class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                            style="text-align: center">
                                             {{ trans('Stages.Stage-Name') }}</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+                                            style="text-align: center">
                                             {{ trans('Stages.Stage-Note') }}</th>
-                                        <th
-                                            class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                        <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                            style="text-align: center">
                                             {{ trans('Stages.Stage-Process') }}</th>
                                         <th class="text-secondary opacity-7"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
-                                        $i=0;
+                                        $i = 0;
                                     @endphp
                                     @foreach ($stage as $item)
-                                    @php
-                                        $i++;
-                                    @endphp
+                                        @php
+                                            $i++;
+                                        @endphp
                                         <tr>
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-                                                    <div class="d-flex flex-column justify-content-center">
-                                                        <p class="text-xs text-secondary mb-0">{{ $i}}</p>
-                                                    </div>
-                                                </div>
+                                            <td class="align-middle text-center"><input type="checkbox"
+                                                    value="{{ $item->ID }}" class="box"></td>
+                                            <td class="align-middle text-center">
+                                                <p class="text-xs text-secondary mb-0">{{ $i }}</p>
                                             </td>
-                                            <td>
-                                                {{-- <p class="text-xs font-weight-bold mb-0">Manager</p> --}}
+                                            <td class="align-middle text-center">
                                                 <p class="text-xs text-secondary mb-0">{{ $item->Name }}</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="text-xs text-secondary mb-0" style="border: 3cm">{{ $item->Note }}</span>
+                                                <span class="text-xs text-secondary mb-0"
+                                                    style="border: 3cm">{{ $item->Note }}</span>
                                             </td>
                                             <td class="align-middle text-center">
                                                 <div class="container text-center">
                                                     <div class="row">
                                                         <div class="col">
-                                                            <!-- Button trigger modal -->
                                                             <button type="button" class="btn btn-success"
-                                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop{{$item->ID}}">
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#staticBackdrop{{ $item->ID }}">
                                                                 {{ trans('stages.Edit') }}
                                                             </button>
+                                                        </div>
+                                                        <div class="col">
+                                                            <button type="button" class="btn btn-danger"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#warning{{ $item->ID }}">
+                                                                {{ trans('stages.Delete') }}
+                                                            </button>                                                  
+                                                        </div>
+                                                      
+                                                        
+                                                                     <!-- Modals -->
+                                                        <div class="modal fade" id="modalToDeleteAll" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5"
+                                                                            id="exampleModalLabel" style="color:red"> <i
+                                                                                class="fa fa-exclamation-triangle"
+                                                                                aria-hidden="true"></i></h1>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close"
+                                                                            style="color:green"><i class="fa fa-times"
+                                                                                aria-hidden="true"></i></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form action="{{ route('stage.deleteall') }}"
+                                                                            method="DELETE">
+                                                                            @csrf
+                                                                            <label>{{ trans('messages.showselected') }}</label>
+                                                                            <label id = "showselected"></label>
+                                                                            <label>{{ trans('classroom.showselected') }}
+                                                                                </lable>
 
-                                                            <!-- Modal -->
-                                                            <div class="modal fade" id="staticBackdrop{{$item->ID}}"
-                                                                data-bs-backdrop="static" data-bs-keyboard="false"
-                                                                tabindex="-1" aria-labelledby="staticBackdropLabel"
-                                                                aria-hidden="true">
-                                                                <div class="modal-dialog">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h1 class="modal-title fs-5"
-                                                                                id="staticBackdropLabel">
-                                                                                {{ trans('stages.Edit') }}</h1>
-                                                                            <button type="button" class="btn-close"
-                                                                                data-bs-dismiss="modal"
-                                                                                aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <form role="form" action="{{ route('stage.update') }}" method="POST">
+                                                                                <input type="hidden" name = "id"
+                                                                                    id="sendselected">
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            {{ trans('stages.Delete') }} </button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                                            aria-labelledby="exampleModalLabel"aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5"
+                                                                            id="exampleModalLabel">
+                                                                            {{ trans('stages.Add-Stage') }}
+                                                                        </h1>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="card-body">
+                                                                            <form role="form"
+                                                                                action="{{ route('stage.store') }}"
+                                                                                method="POST">
                                                                                 @csrf
                                                                                 <label>{{ trans('stages.E-Name') }}</label>
                                                                                 <div class="mb-3">
-                                                                                    <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="email-addon" name="eName" value="{{$item->getTranslation('Name','en')}}">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="" aria-label="text"
+                                                                                        aria-describedby="email-addon"
+                                                                                        name="eName">
                                                                                 </div>
                                                                                 <label>{{ trans('stages.A-Name') }}</label>
                                                                                 <div class="mb-3">
-                                                                                    <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="aName" value="{{$item->getTranslation('Name','ar')}}">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        placeholder="" aria-label="text"
+                                                                                        aria-describedby="password-addon"
+                                                                                        name="aName">
                                                                                 </div>
                                                                                 <label>{{ trans('stages.E-Note') }}</label>
                                                                                 <div class="mb-3">
-                                                                                    <textarea name="eNote" class="form-control" cols="5" rows="5">{{$item->getTranslation('Note','en')}}</textarea>
-                                                                                    {{-- <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="eNote" value="{{$item->getTranslation('Note','en')}}"> --}}
+
+                                                                                    <textarea class="form-control" aria-label="text" name="eNote"> </textarea>
                                                                                 </div>
                                                                                 <label>{{ trans('stages.A-Note') }}</label>
                                                                                 <div class="mb-3">
-                                                                                    <textarea name="aNote" class="form-control" cols="5" rows="5">{{$item->getTranslation('Note','ar')}}</textarea>
-                                                                                    {{-- <input type="text" class="form-control" placeholder=""
-                                                                                        aria-label="text" aria-describedby="password-addon" name="aNote" value="{{$item->getTranslation('Note','ar')}}"> --}}
+
+                                                                                    <textarea class="form-control" aria-label="text" name="aNote"> </textarea>
                                                                                 </div>
-                                                                                <div class="mb-3">
-                                                                                    <input type="hidden" class="form-control" name="id" value="{{$item->ID}}">
-                                                                                </div> 
                                                                         </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="button"
-                                                                                class="btn btn-secondary"
-                                                                                data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
-                                                                            <button type="submit"
-                                                                                class="btn btn-primary">{{ trans('stages.Save-Change') }}</button>
-                                                                        </div>
-                                                                    </form>
                                                                     </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">{{ trans('stages.Confirm') }}</button>
+                                                                    </div>
+                                                                    </form>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col">
+                                                        <div class="modal fade" id="staticBackdrop{{ $item->ID }}"
+                                                            data-bs-backdrop="static" data-bs-keyboard="false"
+                                                            tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5"
+                                                                            id="staticBackdropLabel">
+                                                                            {{ trans('stages.Edit') }}</h1>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal"
+                                                                            aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form role="form"
+                                                                            action="{{ route('stage.update') }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <label>{{ trans('stages.E-Name') }}</label>
+                                                                            <div class="mb-3">
+                                                                                <input type="text"
+                                                                                    class="form-control" placeholder=""
+                                                                                    aria-label="text"
+                                                                                    aria-describedby="email-addon"
+                                                                                    name="eName"
+                                                                                    value="{{ $item->getTranslation('Name', 'en') }}">
+                                                                            </div>
+                                                                            <label>{{ trans('stages.A-Name') }}</label>
+                                                                            <div class="mb-3">
+                                                                                <input type="text"
+                                                                                    class="form-control" placeholder=""
+                                                                                    aria-label="text"
+                                                                                    aria-describedby="password-addon"
+                                                                                    name="aName"
+                                                                                    value="{{ $item->getTranslation('Name', 'ar') }}">
+                                                                            </div>
+                                                                            <label>{{ trans('stages.E-Note') }}</label>
+                                                                            <div class="mb-3">
+                                                                                <textarea name="eNote" class="form-control" cols="5" rows="5">{{ $item->getTranslation('Note', 'en') }}</textarea>
+                                                                                {{-- <input type="text" class="form-control" placeholder=""
+                                                                                    aria-label="text" aria-describedby="password-addon" name="eNote" value="{{$item->getTranslation('Note','en')}}"> --}}
+                                                                            </div>
+                                                                            <label>{{ trans('stages.A-Note') }}</label>
+                                                                            <div class="mb-3">
+                                                                                <textarea name="aNote" class="form-control" cols="5" rows="5">{{ $item->getTranslation('Note', 'ar') }}</textarea>
+                                                                                {{-- <input type="text" class="form-control" placeholder=""
+                                                                                    aria-label="text" aria-describedby="password-addon" name="aNote" value="{{$item->getTranslation('Note','ar')}}"> --}}
+                                                                            </div>
+                                                                            <div class="mb-3">
+                                                                                <input type="hidden"
+                                                                                    class="form-control"
+                                                                                    name="id"
+                                                                                    value="{{ $item->ID }}">
+                                                                            </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button"
+                                                                            class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
+                                                                        <button type="submit"
+                                                                            class="btn btn-primary">{{ trans('stages.Save-Change') }}</button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                        <div class="col">
-                                                            <form action="{{route('stage.delete')}}" method="DELETE">
-                                                                @csrf
-                                                                <input type="hidden" name = "id" value="{{$item->ID}}">
-                                                                <button type="submit" class ="btn btn-danger">{{ trans('stages.Delete') }}</button> 
-                                                            </form>
+                                                        <div class="modal fade" id="warning{{ $item->ID }}"
+                                                            tabindex="-1" aria-labelledby="exampleModalLabel"
+                                                            aria-hidden="true">
+                                                            <div class="modal-dialog">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h1 class="modal-title fs-5"
+                                                                            id="exampleModalLabel" style="color:red"> <i
+                                                                                class="fa fa-exclamation-triangle"
+                                                                                aria-hidden="true"></i></h1>
+                                                                        <button type="button" class="btn-close"
+                                                                            data-bs-dismiss="modal" aria-label="Close"
+                                                                            style="color:green"><i class="fa fa-times"
+                                                                                aria-hidden="true"></i></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <form action="{{ route('stage.delete') }}"
+                                                                            method="DELETE">
+                                                                            @csrf
+                                                                            <label>{{ trans('messages.Warning') }}
+                                                                            </label></br>
+                                                                            <label
+                                                                                style="color:green">{{ $item->Name }}</label>
+                                                                            <input type="hidden" name = "id"
+                                                                                value="{{ $item->ID }}">
+
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-secondary"
+                                                                            data-bs-dismiss="modal">{{ trans('stages.Close') }}</button>
+                                                                        <button type="submit" class="btn btn-primary">
+                                                                            {{ trans('stages.Delete') }} </button>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
