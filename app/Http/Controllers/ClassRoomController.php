@@ -32,12 +32,13 @@ class ClassRoomController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string',
+                'Ename' => 'required|string',
+                'Aname' => 'required|string',
                 'stage' => 'required|string'
             ]);
             $stages = Stage::where('Name->en', $request->stage)->orwhere('Name->ar', $request->stage)->first();
             $classroom = ClassRoom::create([
-                'name' => $request->name,
+                'name' => ['en' => $request->Ename , 'ar' => $request->Aname],
                 'stage_id' => $stages->ID,
             ]);
             $classroom->save();
@@ -70,12 +71,13 @@ class ClassRoomController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string',
+                'Ename' => 'required|string',
+                'Aname' => 'required|string',
                 'stage' => 'required|string'
             ]);
             $stages = Stage::where('Name->en', $request->stage)->orwhere('Name->ar', $request->stage)->first();
             $classRoom->where('id', $request->id)->update([
-                'name' => $request->name,
+                'name' => ['en' => $request->Ename , 'ar' => $request->Aname],
                 'stage_id' => $stages->ID,
             ]);
             return redirect()->back()->with('message', trans('messages.Success'));

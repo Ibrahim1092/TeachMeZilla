@@ -14,7 +14,7 @@
                             {{ trans('classroom.Delete_All') }}
                         </button>
                         <button class="btn btn-warning " type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Specific Search
+                            {{ trans('classroom.Specific') }}
                         </button>
                         <ul class="dropdown-menu">
                             @foreach ($stages as $stage)
@@ -41,10 +41,15 @@
                                         <div class="card-body">
                                             <form role="form" action="{{ route('classroom.store') }}" method="POST">
                                                 @csrf
-                                                <label>{{ trans('classroom.Name') }}</label>
+                                                <label>{{ trans('classroom.Ename') }}</label>
                                                 <div class="mb-3">
                                                     <input type="text" class="form-control" placeholder=""
-                                                        aria-label="text" aria-describedby="email-addon" name="name">
+                                                        aria-label="text" aria-describedby="email-addon" name="Ename">
+                                                </div>
+                                                <label>{{ trans('classroom.Aname') }}</label>
+                                                <div class="mb-3">
+                                                    <input type="text" class="form-control" placeholder=""
+                                                        aria-label="text" aria-describedby="email-addon" name="Aname">
                                                 </div>
                                                 <label>{{ trans('classroom.stage_name') }}</label>
                                                 <select class="form-select" aria-label="Default select example"
@@ -159,12 +164,19 @@
                                                                                 action="{{ route('classroom.update') }}"
                                                                                 method="POST">
                                                                                 @csrf
-                                                                                <label>{{ trans('classroom.Name') }}</label>
+                                                                                <label>{{ trans('classroom.Ename') }}</label>
                                                                                 <div class="mb-3">
                                                                                     <input type="text"
                                                                                         class="form-control"
-                                                                                        value="{{ $item->name }}"
-                                                                                        name="name">
+                                                                                        value="{{ $item->getTranslation('name','en') }}"
+                                                                                        name="Ename">
+                                                                                </div>
+                                                                                <label>{{ trans('classroom.Aname') }}</label>
+                                                                                <div class="mb-3">
+                                                                                    <input type="text"
+                                                                                        class="form-control"
+                                                                                        value="{{ $item->getTranslation('name','ar') }}"
+                                                                                        name="Aname">
                                                                                 </div>
                                                                                 <label>{{ trans('classroom.stage_name') }}</label>
                                                                                 <select class="form-select"
